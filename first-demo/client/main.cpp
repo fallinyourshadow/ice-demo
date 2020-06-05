@@ -12,14 +12,14 @@ int main(int argc,char* argv[])
             ic = Ice::initialize(argc,argv);
             //代理基类对象
             Ice::ObjectPrx base = ic->stringToProxy("sayHello:defulat -p 10000");
-            //向下转型代理类，使用该方法会向服务器发送请求
+            //向下转型代理类，使用该方法会向服务器发送请求（连接到服务器）
             //成功返回接口的代理，失败返回null
             Test::HelloPrx sayHello = Test::HelloPrx::checkedCast(base);
             if(!sayHello)
                 throw "Invaild proxy";
-            //调用代理操作
+                
+            //调用代理操作,发送自己的名字
             sayHello->SayHello("client");
-
         }
     }
     catch(const std::exception& ex)
@@ -32,6 +32,6 @@ int main(int argc,char* argv[])
         status = -1;
         std::cerr << msg << '\n';
     }
-    
+
     return status;
 }
